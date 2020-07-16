@@ -17,4 +17,4 @@ RUN ["npm", "install"]
 COPY ./ ./
 
 # Run The Application
-CMD ["npm", "run ", "start"]
+CMD ["npm", "run", "start"]
