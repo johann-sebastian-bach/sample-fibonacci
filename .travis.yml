@@ -3,8 +3,14 @@ language:
 sudo: required
 services:
   - docker
-script:
+before_script:
   - docker build -t oraserv/fib-backend:pro -f ./backend/Dockerfile ./backend
   - docker build -t oraserv/fib-worker:pro -f ./worker/Dockerfile ./worker
   - docker build -t oraserv/fib-frontend:pro -f ./frontend/Dockerfile ./frontend
   - docker build -t oraserv/fib-nginx:pro -f ./nginx/Dockerfile ./nginx
+script:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push oraserv/fib-backend:pro
+  - docker push oraserv/fib-worker:pro
+  - docker push oraserv/fib-frontend:pro
+  - docker push oraserv/fib-nginx:pro
