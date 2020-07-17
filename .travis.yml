@@ -3,7 +3,7 @@ language:
 services:
   - docker
 script:
-  - docker build -t oraserv/fib-backend:pro -t ./backend/Dockerfile .
-  - docker build -t oraserv/fib-worker:pro -t ./worker/Dockerfile .
-  - docker build -t oraserv/fib-frontend:pro -t ./frontend/Dockerfile .
-  - docker build -t oraserv/fib-nginx:pro -t ./nginx/Dockerfile .
+  - docker build -t oraserv/fib-backend:pro -f ./backend/Dockerfile .
+  - docker build -t oraserv/fib-worker:pro -f ./worker/Dockerfile .
+  - docker build -t oraserv/fib-frontend:pro -f ./frontend/Dockerfile .
+  - docker build -t oraserv/fib-nginx:pro -f ./nginx/Dockerfile .
