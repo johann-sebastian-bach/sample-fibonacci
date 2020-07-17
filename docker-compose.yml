@@ -19,7 +19,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - PGHOST=postgres
+      - PGHOST=fib-postgres
       - PGPORT=5432
       - PGDATABASE=postgres
       - PGUSER=postgres
