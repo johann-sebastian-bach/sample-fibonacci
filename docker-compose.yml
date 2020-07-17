@@ -17,7 +17,7 @@ services:
 
   fib-backend:
     restart: always
-    image: oraserv:fib-backend:pro
+    image: oraserv/fib-backend:pro
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
