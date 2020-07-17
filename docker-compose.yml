@@ -2,19 +2,16 @@
 version: '3'
 services:
   fib-postgres:
-    restart: always
     image: library/postgres:latest
     environment:
       - POSTGRES_PASSWORD=fibonaccipassword
 
   fib-redis:
-    restart: always
     image: library/redis:latest
     command:
       - --loglevel warning
 
   fib-backend:
-    restart: always
     image: oraserv/fib-backend:pro
     environment:
       - REDIS_HOST=redis
@@ -29,7 +26,6 @@ services:
       - fib-redis
 
   fib-worker:
-    restart: always
     image: oraserv/fib-worker:pro
     environment:
       - REDIS_HOST=redis
@@ -39,7 +35,6 @@ services:
       - fib-redis
 
   fib-frontend:
-    restart: always
     image: oraserv/fib-frontend:pro
     depends_on:
       - fib-postgres
@@ -49,7 +44,6 @@ services:
     stdin_open: true
 
   nginx:
-    restart: always
     image: oraserv/fib-nginx:pro
     depends_on:
       - fib-backend
