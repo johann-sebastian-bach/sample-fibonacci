@@ -4,7 +4,7 @@ sudo: required
 services:
   - docker
 script:
-  - docker build -t oraserv/fib-backend:pro -f ./backend/Dockerfile .
-  - docker build -t oraserv/fib-worker:pro -f ./worker/Dockerfile .
-  - docker build -t oraserv/fib-frontend:pro -f ./frontend/Dockerfile .
-  - docker build -t oraserv/fib-nginx:pro -f ./nginx/Dockerfile .
+  - docker build -t oraserv/fib-backend:pro -f ./backend/Dockerfile ./backend
+  - docker build -t oraserv/fib-worker:pro -f ./worker/Dockerfile ./worker
+  - docker build -t oraserv/fib-frontend:pro -f ./frontend/Dockerfile ./frontend
+  - docker build -t oraserv/fib-nginx:pro -f ./nginx/Dockerfile ./nginx
