@@ -1,0 +1,61 @@
+---
+version: '3'
+services:
+  fib-postgres:
+    restart: always
+    image: library/postgres:latest
+    environment:
+      - POSTGRES_USER=fibonacci
+      - POSTGRES_PASSWORD=fibonaccipassword
+      - POSTGRES_DB=fibonaccidb
+
+  fib-redis:
+    restart: always
+    image: library/redis:latest
+    command:
+      - --loglevel warning
+
+  fib-backend:
+    restart: always
+    image: oraserv:fib-backend:pro
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGHOST=postgres
+      - PGPORT=5432
+      - PGDATABASE=fibonaccidb
+      - PGUSER=fibonacci
+      - PGPASSWORD=fibonaccipassword
+    depends_on:
+      - fib-postgres
+      - fib-redis
+
+  fib-worker:
+    restart: always
+    image: oraserv/fib-worker:pro
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - fib-postgres
+      - fib-redis
+
+  fib-frontend:
+    restart: always
+    image: oraserv/fib-frontend:pro
+    depends_on:
+      - fib-postgres
+      - fib-redis
+      - fib-backend
+      - fib-worker
+    stdin_open: true
+
+  nginx:
+    restart: always
+    image: oraserv/fib-nginx:pro
+    depends_on:
+      - fib-backend
+      - fib-worker
+      - fib-frontend
+    ports:
+    - 80:80
