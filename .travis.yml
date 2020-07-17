@@ -6,7 +6,7 @@ before_install:
   - docker build -t oraserv/fib-frontend:test -f ./frontend/Dockerfile.dev ./frontend
 
 scripts:
-  - docker run -e CI=true oraserv/react-test npm test
+  - docker run -e CI=true oraserv/fib-frontend:test npm test
 
 after_success:
   - docker build -t oraserv/fib-backend:pro -f ./backend/Dockerfile ./backend
