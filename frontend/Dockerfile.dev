@@ -12,6 +12,7 @@ COPY ./package.json .
 
 # Download and Install All The Dependencies
 RUN ["npm", "install"]
+RUN npm install --save-dev @testing-library/jest-dom
 
 # Add The Application Source Code
 COPY ./ ./
