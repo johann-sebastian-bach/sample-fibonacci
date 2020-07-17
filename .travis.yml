@@ -1,0 +1,9 @@
+language:
+  - generic
+services:
+  - docker
+script:
+  - docker build -t oraserv/fib-backend:pro -t ./backend/Dockerfile .
+  - docker build -t oraserv/fib-worker:pro -t ./worker/Dockerfile .
+  - docker build -t oraserv/fib-frontend:pro -t ./frontend/Dockerfile .
+  - docker build -t oraserv/fib-nginx:pro -t ./nginx/Dockerfile .
