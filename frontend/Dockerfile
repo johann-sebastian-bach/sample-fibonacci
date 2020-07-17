@@ -25,11 +25,13 @@ FROM nginx:latest
 # Provide Maintainer Information
 MAINTAINER MohammadHosein Chahardoli <mohammadhoseinchahardoli@gmail.com>
 
+# Expose The Application Port
+EXPOSE 3000
+
 # Copy The Built Version of Application
 COPY --from=builder /app/build/ /usr/share/nginx/html/
 
 # Copy The Nginx Configuration File
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
-# Expose The Application Port
-EXPOSE 3000
+
