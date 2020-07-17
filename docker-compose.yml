@@ -57,5 +57,7 @@ services:
       - fib-backend
       - fib-worker
       - fib-frontend
+      - fib-redis
+      - fib-postgres
     ports:
     - 80:80
