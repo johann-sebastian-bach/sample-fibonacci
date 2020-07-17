@@ -5,9 +5,7 @@ services:
     restart: always
     image: library/postgres:latest
     environment:
-      - POSTGRES_USER=fibonacci
       - POSTGRES_PASSWORD=fibonaccipassword
-      - POSTGRES_DB=fibonaccidb
 
   fib-redis:
     restart: always
@@ -23,8 +21,8 @@ services:
       - REDIS_PORT=6379
       - PGHOST=postgres
       - PGPORT=5432
-      - PGDATABASE=fibonaccidb
-      - PGUSER=fibonacci
+      - PGDATABASE=postgres
+      - PGUSER=postgres
       - PGPASSWORD=fibonaccipassword
     depends_on:
       - fib-postgres
