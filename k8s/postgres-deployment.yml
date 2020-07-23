@@ -31,3 +31,9 @@ spec:
             - mountPath: /var/lib/postgresql/data
               name: fibo-postgres-volume
               subPath: postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: PGPASSWORD
+                  name: postgres-password
