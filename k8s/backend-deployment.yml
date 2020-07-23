@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fibo-backend-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      project: fibonacci
+      env: production
+      location: EN
+      component: backend
+      component_type: deployment
+  template:
+    metadata:
+      labels:
+        project: fibonacci
+        env: production
+        location: EN
+        component: backend
+        component_type: deployment
+    spec:
+      containers:
+        - name: backend
+          image: oraserv/fib-backend:pro
+          ports:
+            - containerPort: 5000
