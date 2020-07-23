@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-cluster-ip-service
+spec:
+  type: ClusterIP
+  selector:
+    project: fibonacci
+    env: production
+    location: EN
+    component: frontend
+    component_type: deployment
+  ports:
+    - port: 3000
+      targetPort: 3000
