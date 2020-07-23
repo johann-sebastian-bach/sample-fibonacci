@@ -10,7 +10,6 @@ spec:
       env: production
       location: EN
       component: backend
-      component_type: deployment
   template:
     metadata:
       labels:
@@ -18,7 +17,6 @@ spec:
         env: production
         location: EN
         component: backend
-        component_type: deployment
     spec:
       containers:
         - name: backend
