@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fibo-postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: fibonacci
+      env: production
+      location: EN
+      component: postgres
+  template:
+    metadata:
+      labels:
+        project: fibonacci
+        env: production
+        location: EN
+        component: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: library/postgres:latest
+          ports:
+            - containerPort: 5432
