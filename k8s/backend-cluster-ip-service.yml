@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-cluster-ip-service
+spec:
+  type: ClusterIP
+  selector:
+    project: fibonacci
+    env: production
+    location: EN
+    component: backend
+    component_type: deployment
+  ports:
+    - port: 5000
+      targetPort: 5000
