@@ -9,7 +9,6 @@ spec:
     env: production
     location: EN
     component: frontend
-    component_type: deployment
   ports:
     - port: 3000
       targetPort: 3000
