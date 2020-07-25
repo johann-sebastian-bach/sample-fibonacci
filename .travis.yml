@@ -18,3 +18,17 @@ after_success:
   - docker push oraserv/fib-worker:pro
   - docker push oraserv/fib-frontend:pro
   - docker push oraserv/fib-nginx:pro
+
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: fibonacci-calculator
+  env: fibonacci-dev
+  bucket_name: elasticbeanstalk-us-east-1-349511673648
+  bucket_path: fibonacci
+  on:
+    branch: staging
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
