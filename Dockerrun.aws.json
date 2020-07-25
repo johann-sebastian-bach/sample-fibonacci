@@ -1,0 +1,43 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "frontend",
+      "image": "oraserv/fib-frontend:pro",
+      "hostname": "frontend",
+      "memory": 128,
+      "essential": false
+    },
+    {
+      "name": "backend",
+      "image": "oraserv/fib-backend:pro",
+      "hostname": "backend",
+      "memory": 128,
+      "essential": false
+    },
+    {
+      "name": "worker",
+      "image": "oraserv/fib-worker:pro",
+      "hostname": "worker",
+      "memory": 128,
+      "essential": false
+    },
+    {
+      "name": "nginx",
+      "image": "oraserv/fib-nginx:pro",
+      "hostname": "worker",
+      "memory": 128,
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": [
+        "frontend",
+        "backend"
+      ]
+    }
+  ]
+}
