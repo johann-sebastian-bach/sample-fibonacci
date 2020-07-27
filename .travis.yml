@@ -2,19 +2,28 @@ language: generic
 sudo: required
 services: docker
 
+env:
+  global:
+    - GIT_SHA=$(git rev-parse HEAD)
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+
 before_install:
-  - docker build -t oraserv/fib-frontend:test -f ./frontend/Dockerfile.dev ./frontend
-
-scripts:
-  - docker run -e CI=true oraserv/fib-frontend:test npm test
-
-after_success:
-  - docker build -t oraserv/fib-backend:pro -f ./backend/Dockerfile ./backend
-  - docker build -t oraserv/fib-worker:pro -f ./worker/Dockerfile ./worker
-  - docker build -t oraserv/fib-frontend:pro -f ./frontend/Dockerfile ./frontend
-  - docker build -t oraserv/fib-nginx:pro -f ./nginx/Dockerfile ./nginx
+  - openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encryptes_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
+  - curl https://sdk.cloud.google.com | bash > /dev/null
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  - gcloud components update kubectl
+  - gcloud auth activate-service-account --key-file service-account.json
+  - gcloud config set project skilful-berm-214822
+  - gcloud config set compute/zone us-east-a
+  - gcloud container clusters get-credentials fibo-cluster
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push oraserv/fib-backend:pro
-  - docker push oraserv/fib-worker:pro
-  - docker push oraserv/fib-frontend:pro
-  - docker push oraserv/fib-nginx:pro
+  - docker build -t oraserv/react-test -f ./frontend/Dockerfile.dev ./frontend
+
+script:
+  - docker run -e CI=true USERNAME/docker-react npm run test
+
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master
