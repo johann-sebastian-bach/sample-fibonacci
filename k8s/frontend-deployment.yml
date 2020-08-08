@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: oraserv/fib-frontend:pro
+          image: oraserv/fib-frontend:latest
           ports:
             - containerPort: 3000

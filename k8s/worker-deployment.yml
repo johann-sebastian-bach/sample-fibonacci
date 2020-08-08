@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: worker
-          image: oraserv/fib-worker:pro
+          image: oraserv/fib-worker:latest
           env:
             - name: REDIS_HOST
               value: redis-cluster-ip-service
