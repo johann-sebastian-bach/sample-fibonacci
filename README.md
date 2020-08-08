@@ -1,7 +1,7 @@
-# sample-fibonacci
+# Sample Fibonacci
 Just another playground repository.
 
-## Quick start 
-To setup the system, first need to create a secret by below command. Please replace the password section. 
+## Quick Start 
+Please replace the ```POSTGRES_PASSWORD``` value in the postgres-secret.yml first. Then, the deployment process can be start by the following command.
 
-```kubectl create secret generic postgres-password --from-literal=POSTGRES_PASSWORD=ZXCvbn123```
+```kubectl apply -f k8s```
