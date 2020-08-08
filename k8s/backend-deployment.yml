@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fibo-backend-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      project: fibonacci
+      env: production
+      location: EN
+      component: backend
+  template:
+    metadata:
+      labels:
+        project: fibonacci
+        env: production
+        location: EN
+        component: backend
+    spec:
+      containers:
+        - name: backend
+          image: oraserv/fib-backend:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: '6379'
+            - name: PGUSER
+              value: postgres
+            - name: PGHOST
+              value: postgres-cluster-ip-service
+            - name: PGPORT
+              value: '5432'
+            - name: PGDATABASE
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-password
+                  key: POSTGRES_PASSWORD

@@ -10,12 +10,11 @@ WORKDIR /app
 # Add package.json
 COPY ./package.json .
 
-# Download and Install All The Dependencies
+# Download and Install All Dependencies
 RUN ["npm", "install"]
-RUN npm install --save-dev @testing-library/jest-dom
 
-# Add The Application Source Code
+# Add Application Source Code
 COPY ./ ./
 
 # Run The Application
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "dev"]
