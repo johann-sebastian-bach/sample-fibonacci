@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: oraserv/fib-backend:pro
+          image: oraserv/fib-backend:latest
           ports:
             - containerPort: 5000
           env:
