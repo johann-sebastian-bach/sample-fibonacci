@@ -39,7 +39,7 @@ pipeline {
         stage('Remove Unused docker image') {
             steps{
                 sh "docker rmi $registry:latest"
-                sh "docker rmi $registry:$({env.GIT_COMMIT})"
+                sh 'docker rmi $registry:"${env.GIT_COMMIT}"'
             }
         }
     }
