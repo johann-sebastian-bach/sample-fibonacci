@@ -26,7 +26,7 @@ pipeline {
             steps{
                 script{
                     /* Build the Frontend docker image */
-                    dockerImage = docker.build registry, "-f ./frontend/Dockerfile ./frontend"
+                    dockerImage = docker.build "chahardoli/fibo-frontend", "-f ./frontend/Dockerfile ./frontend"
                 }
             }
         }
@@ -35,7 +35,6 @@ pipeline {
             steps{
                 script{
                     /* Push the Frontend docker image via Git SHA and latest tags */
-                    registry = "chahardoli/fibo-frontend"
                     docker.withRegistry( '', registryCredential ) {
                         dockerImage.push("latest")
                         dockerImage.push("${env.GIT_COMMIT}")
@@ -55,7 +54,7 @@ pipeline {
             steps{
                 script{
                     /* Build the Backend docker image */
-                    dockerImage = docker.build registry, "-f ./backend/Dockerfile ./backend"
+                    dockerImage = docker.build "chahardoli/fibo-frontend", "-f ./backend/Dockerfile ./backend"
                 }
             }
         }
@@ -64,7 +63,6 @@ pipeline {
             steps{
                 script{
                     /* Push the Backend docker image via Git SHA and latest tags */
-                    registry = "chahardoli/fibo-backend"
                     docker.withRegistry( '', registryCredential ) {
                         dockerImage.push("latest")
                         dockerImage.push("${env.GIT_COMMIT}")
