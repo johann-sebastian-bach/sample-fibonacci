@@ -32,6 +32,13 @@ pipeline {
             }
         }
 
+        stage('Remove Unused Frontend docker image') {
+            steps{
+                /* Clean the Frontend docker image from slave */
+                sh "docker rmi -f chahardoli/fibo-frontend:test"
+            }
+        }
+
         stage('Build Frontend') {
             steps{
                 script{
