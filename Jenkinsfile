@@ -22,6 +22,16 @@ pipeline {
             }
         }
 
+        stage('Build Frontend to Test') {
+            steps{
+                script{
+                    /* Build the Frontend docker image */
+                    dockerImage = docker.build "chahardoli/fibo-frontend:test", "-f ./frontend/Dockerfile.dev ./frontend"
+                    sh "docker run -e CI=true chahardoli/fibo-frontend:test npm test"
+                }
+            }
+        }
+
         stage('Build Frontend') {
             steps{
                 script{
@@ -131,6 +141,7 @@ pipeline {
             steps{
                 /* Clean the Nginx docker image from slave */
                 sh "docker images | grep fibo-nginx | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi chahardoli/fibo-nginx:{}"
+                sh "docker image prune -f "
             }
         }
     }
