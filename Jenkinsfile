@@ -1,9 +1,6 @@
 pipeline {
 
     environment {
-        /* Specify the Docker hub account and repository name */
-        // registry = "chahardoli/fibo-frontend"
-
         /* Provide the docker credential name in the Jenkins server */
         registryCredential = 'docker-hub-credentials'
 
@@ -78,6 +75,34 @@ pipeline {
             steps{
                 /* Clean the Backend docker image from slave */
                 sh "docker images | grep fibo-backend | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi chahardoli/fibo-backend:{}"
+            }
+        }
+
+        stage('Build Worker') {
+            steps{
+                script{
+                    /* Build the Worker docker image */
+                    dockerImage = docker.build "chahardoli/fibo-worker", "-f ./worker/Dockerfile ./worker"
+                }
+            }
+        }
+
+        stage('Push Worker Image'){
+            steps{
+                script{
+                    /* Push the Worker docker image via Git SHA and latest tags */
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push("latest")
+                        dockerImage.push("${env.GIT_COMMIT}")
+                    }
+                }
+            }
+        }
+
+        stage('Remove Unused Worker docker image') {
+            steps{
+                /* Clean the Worker docker image from slave */
+                sh "docker images | grep fibo-worker | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi chahardoli/fibo-worker:{}"
             }
         }
     }
