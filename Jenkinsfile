@@ -1,7 +1,7 @@
 pipeline {
     environment {
         /* Specify the Docker hub account and repository name */
-        registry = "chahardoli/fibo-frontend"
+        // registry = "chahardoli/fibo-frontend"
 
         /* Provide the docker credential name in the Jenkins server */
         registryCredential = 'docker-hub-credentials'
@@ -35,6 +35,7 @@ pipeline {
             steps{
                 script{
                     /* Push the Frontend docker image via Git SHA and latest tags */
+                    registry = "chahardoli/fibo-frontend"
                     docker.withRegistry( '', registryCredential ) {
                         dockerImage.push("latest")
                         dockerImage.push("${env.GIT_COMMIT}")
@@ -63,6 +64,7 @@ pipeline {
             steps{
                 script{
                     /* Push the Backend docker image via Git SHA and latest tags */
+                    registry = "chahardoli/fibo-backend"
                     docker.withRegistry( '', registryCredential ) {
                         dockerImage.push("latest")
                         dockerImage.push("${env.GIT_COMMIT}")
