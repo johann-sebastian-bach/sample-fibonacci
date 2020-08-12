@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        registry = "chahardoli/frontend"
+        registry = "chahardoli/fibo-frontend"
         registryCredential = 'docker-hub-credentials'
         dockerImage = ''
     }
@@ -38,7 +38,8 @@ pipeline {
 
         stage('Remove Unused docker image') {
             steps{
-                sh "docker rmi $registry:latest"
+                //sh "docker rmi $registry:latest"
+                sh "docker images | grep fibo-frontend | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi chahardoli/fibo-frontend:{}"
             }
         }
     }
