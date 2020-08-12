@@ -43,7 +43,7 @@ pipeline {
             }
         }
 
-        stage('Remove Unused docker image') {
+        stage('Remove Unused Frontend docker image') {
             steps{
                 /* Clean the Frontend docker image from slave */
                 sh "docker images | grep fibo-frontend | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi chahardoli/fibo-frontend:{}"
@@ -71,7 +71,7 @@ pipeline {
             }
         }
 
-        stage('Remove Unused docker image') {
+        stage('Remove Unused Backend docker image') {
             steps{
                 /* Clean the Backend docker image from slave */
                 sh "docker images | grep fibo-backend | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi chahardoli/fibo-backend:{}"
