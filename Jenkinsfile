@@ -1,4 +1,5 @@
 pipeline {
+
     environment {
         /* Specify the Docker hub account and repository name */
         // registry = "chahardoli/fibo-frontend"
@@ -9,10 +10,12 @@ pipeline {
         /* Define the variable of docker image */
         dockerImage = ''
     }
+
     agent {
         /* Specify the slave node via docker engine */
         label 'slave'
     }
+
     stages {
 
         stage('Clone repository') {
@@ -54,7 +57,7 @@ pipeline {
             steps{
                 script{
                     /* Build the Backend docker image */
-                    dockerImage = docker.build "chahardoli/fibo-frontend", "-f ./backend/Dockerfile ./backend"
+                    dockerImage = docker.build "chahardoli/fibo-backend", "-f ./backend/Dockerfile ./backend"
                 }
             }
         }
