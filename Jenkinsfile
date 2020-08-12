@@ -105,5 +105,33 @@ pipeline {
                 sh "docker images | grep fibo-worker | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi chahardoli/fibo-worker:{}"
             }
         }
+
+        stage('Build Nginx') {
+            steps{
+                script{
+                    /* Build the Nginx docker image */
+                    dockerImage = docker.build "chahardoli/fibo-nginx", "-f ./nginx/Dockerfile ./nginx"
+                }
+            }
+        }
+
+        stage('Push Nginx Image'){
+            steps{
+                script{
+                    /* Push the Nginx docker image via Git SHA and latest tags */
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push("latest")
+                        dockerImage.push("${env.GIT_COMMIT}")
+                    }
+                }
+            }
+        }
+
+        stage('Remove Unused Nginx docker image') {
+            steps{
+                /* Clean the Nginx docker image from slave */
+                sh "docker images | grep fibo-nginx | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi chahardoli/fibo-nginx:{}"
+            }
+        }
     }
 }
