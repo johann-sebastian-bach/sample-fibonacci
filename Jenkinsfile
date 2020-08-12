@@ -22,7 +22,7 @@ pipeline {
             }
         }
 
-        stage('Build Frontend to Test') {
+        stage('Build and Test Frontend') {
             steps{
                 script{
                     /* Build the Frontend docker image */
@@ -56,7 +56,7 @@ pipeline {
         stage('Remove Unused Frontend docker image') {
             steps{
                 /* Clean the Frontend docker image from slave */
-                sh "docker images | grep fibo-frontend | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi chahardoli/fibo-frontend:{}"
+                sh "docker images | grep fibo-frontend | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi -f chahardoli/fibo-frontend:{}"
             }
         }
 
